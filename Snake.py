@@ -3,6 +3,14 @@ from random import randrange
 
 # Variables Globales
 WINDOW = 500
+TILE_SIZE = 25
+RANGE = (TILE_SIZE // 2, WINDOW - TILE_SIZE // 2, TILE_SIZE)
+get_random_position = lambda: [randrange(*RANGE), randrange(*RANGE)]# funcion para obtener una posicion aleatoria
+snake = pg.rect.Rect([0, 0, TILE_SIZE - 2, TILE_SIZE - 2])# INSTANCIA DE LA CLASE RECT sera la cabeza de la serpiente
+snake.center = get_random_position()
+length = 1
+snake_body_segments = [snake.copy()]
+snake_direction = (0, 0)
 screen = pg.display.set_mode([WINDOW] * 2)
 clock = pg.time.Clock()# frame rate
 
@@ -12,5 +20,6 @@ while True:
         if event.type == pg.QUIT:
             exit()
     screen.fill('black')
+    [pg.draw.rect(screen, 'green', segment) for segment in snake_body_segments]
     pg.display.flip()
     clock.tick(60)
