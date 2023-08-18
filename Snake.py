@@ -11,7 +11,7 @@ snake.center = get_random_position()
 length = 1
 snake_body_segments = [snake.copy()]
 snake_direction = (0, 0)
-time, time_steps = 0, 110
+time, time_steps = 0, 110 #time es el tiempo actual y time_steps es el tiempo que tarda en moverse la serpiente 
 screen = pg.display.set_mode([WINDOW] * 2)
 clock = pg.time.Clock()# frame rate
 
@@ -32,10 +32,10 @@ while True:
     screen.fill('black')
     [pg.draw.rect(screen, 'green', segment) for segment in snake_body_segments]
     time_now = pg.time.get_ticks()
-    if time_now - time > time_steps:
-        time = time_now
+    if time_now - time > time_steps:# si el tiempo actual menos el tiempo anterior es mayor al tiempo que tarda en moverse la serpiente
+        time = time_now # el tiempo actual se vuelve el tiempo anterior
         snake.move_ip(snake_direction)
-        snake_body_segments.append(snake.copy())
-        snake_body_segments = snake_body_segments[-length:]
+        snake_body_segments.append(snake.copy())# se agrega una copia de la cabeza de la serpiente a la lista de segmentos
+        snake_body_segments = snake_body_segments[-length:]# se actualiza la lista de segmentos
     pg.display.flip()
     clock.tick(60)
