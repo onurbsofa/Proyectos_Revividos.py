@@ -36,6 +36,16 @@ while True:
     if snake.colliderect(food):# si la serpiente choca con la comida
         length += 1
         food.center = get_random_position()
+    if snake.left < 0 or snake.right > WINDOW or snake.top < 0 or snake.bottom > WINDOW:# si la serpiente choca con los bordes
+        snake.center = get_random_position()
+        length = 1
+        snake_body_segments = [snake.copy()]
+        food.center = get_random_position()
+    if any(segment.center == snake.center for segment in snake_body_segments[:-1]):# si la serpiente choca con su cuerpo
+        snake.center = get_random_position()
+        length = 1
+        snake_body_segments = [snake.copy()]
+        food.center = get_random_position()
     [pg.draw.rect(screen, 'green', segment) for segment in snake_body_segments]
     time_now = pg.time.get_ticks()
     if time_now - time > time_steps:# si el tiempo actual menos el tiempo anterior es mayor al tiempo que tarda en moverse la serpiente
