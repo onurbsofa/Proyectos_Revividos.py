@@ -11,7 +11,9 @@ snake.center = get_random_position()
 length = 1
 snake_body_segments = [snake.copy()]
 snake_direction = (0, 0)
-time, time_steps = 0, 110 #time es el tiempo actual y time_steps es el tiempo que tarda en moverse la serpiente 
+time, time_steps = 0, 110 #time es el tiempo actual y time_steps es el tiempo que tarda en moverse la serpiente
+food = snake.copy()
+food.center = get_random_position() 
 screen = pg.display.set_mode([WINDOW] * 2)
 clock = pg.time.Clock()# frame rate
 
@@ -30,6 +32,10 @@ while True:
             if event.key == pg.K_RIGHT:
                 snake_direction = (TILE_SIZE, 0)
     screen.fill('black')
+    pg.draw.rect(screen, 'red', food)
+    if snake.colliderect(food):# si la serpiente choca con la comida
+        length += 1
+        food.center = get_random_position()
     [pg.draw.rect(screen, 'green', segment) for segment in snake_body_segments]
     time_now = pg.time.get_ticks()
     if time_now - time > time_steps:# si el tiempo actual menos el tiempo anterior es mayor al tiempo que tarda en moverse la serpiente
